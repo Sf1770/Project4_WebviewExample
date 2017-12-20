@@ -13,8 +13,7 @@ class ViewController: UIViewController,WKNavigationDelegate {
     
     var webView: WKWebView!
     var progressView: UIProgressView!
-    var websites = ["apple.com",
-                    "hackingwithswift.com"]
+    var website: String?
     
     override func loadView() {
         webView = WKWebView()
@@ -27,7 +26,7 @@ class ViewController: UIViewController,WKNavigationDelegate {
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil) //#keyPath like #selector allows the compiler to check that your code is correct, that there actually exist an estimatedProgress property
         
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Open", style: .plain, target: self, action: #selector(openTapped))
+        //navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Open", style: .plain, target: self, action: #selector(openTapped))
         
         progressView = UIProgressView(progressViewStyle: .default) //creates UIProgressView instance
         progressView.sizeToFit() //sets layout size to fit content
@@ -39,7 +38,7 @@ class ViewController: UIViewController,WKNavigationDelegate {
         toolbarItems = [progressButton,spacer,refresh] //array of the things on the toolbar
         navigationController?.isToolbarHidden = false //makes the toolbar shown
         
-        let url = URL(string: "https://" + websites[0])!
+        let url = URL(string: "https://" + website!)!
         webView.load(URLRequest(url: url))
         webView.allowsBackForwardNavigationGestures = true
         
@@ -51,6 +50,7 @@ class ViewController: UIViewController,WKNavigationDelegate {
         }
     }
     
+    /*
     @objc func openTapped() {
         let ac = UIAlertController(title: "Open page...", message: nil, preferredStyle: .actionSheet)
         for website in websites{
@@ -74,6 +74,8 @@ class ViewController: UIViewController,WKNavigationDelegate {
         }
         decisionHandler(.cancel)
     }
+ 
+ */
     
     func openPage(action: UIAlertAction){
         let url = URL(string: "https://" + action.title!)!
